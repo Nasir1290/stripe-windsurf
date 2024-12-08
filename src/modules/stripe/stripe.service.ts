@@ -1,19 +1,32 @@
-import Stripe from 'stripe';
-import { ICreateCheckoutSession, ICreatePrice, ICreateProduct, IPaymentIntent } from './stripe.interface';
-import config from '../../config';
+import Stripe from "stripe";
+import {
+  ICreateCheckoutSession,
+  ICreatePrice,
+  ICreateProduct,
+  IPaymentIntent,
+} from "./stripe.interface";
+import config from "../../config";
 
 const stripe = new Stripe(config.stripe.secretKey, {
-  apiVersion: '2024-11-20.acacia',
+  apiVersion: "2024-11-20.acacia",
 });
 
 const createPaymentIntent = async (payload: IPaymentIntent) => {
+  // const paymentIntent = await stripe.paymentIntents.create({
+  //   amount: payload.amount,
+  //   currency: payload.currency,
+  //   payment_method_types: payload.payment_method_types || ['card'],
+  //   description: payload.description,
+  // });
+
+  // return paymentIntent;
+
   const paymentIntent = await stripe.paymentIntents.create({
     amount: payload.amount,
     currency: payload.currency,
-    payment_method_types: payload.payment_method_types || ['card'],
+    payment_method_types: payload.payment_method_types || ["card"],
     description: payload.description,
   });
-
   return paymentIntent;
 };
 
